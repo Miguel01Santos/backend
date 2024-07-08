@@ -5,6 +5,7 @@ import { UsersModule } from './users/users/users.module';
 import { JwtModule} from '@nestjs/jwt';
 import * as cors from 'cors';
 import { MiddlewareConsumer } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -12,7 +13,9 @@ import { MiddlewareConsumer } from '@nestjs/common';
     secret: process.env.SECRET_KEY || '',
     signOptions: { expiresIn: '86400s'},
   }),
-  UsersModule],
+  UsersModule,
+  MongooseModule.forRoot('mongodb://localhost:27017'),
+ ],
   controllers: [AppController],
   providers: [AppService],
 })

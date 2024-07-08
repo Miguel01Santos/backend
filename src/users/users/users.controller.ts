@@ -10,6 +10,11 @@ export class UsersController {
     async login(@Body() usuario: UsuarioDto){
         return this.authService.login(usuario);
     }
+
+    @Post('register')
+    async register(@Body() usuario: UsuarioDto){
+        return this.authService.register(usuario);
+    }
 }
 
 
