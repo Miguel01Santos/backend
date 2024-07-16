@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { DataModel } from './dto/model';
+import { UsuarioDto } from './UsersPage/Model.dto/interface.userdto';
 
 
 @Controller()
@@ -8,7 +8,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): DataModel {
+  getHello(): UsuarioDto {
     return this.appService.getHello();
   }
 }

@@ -1,24 +1,39 @@
-import { Header, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users/users.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule} from '@nestjs/jwt';
 import * as cors from 'cors';
 import { MiddlewareConsumer } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule} from '@nestjs/mongoose';
+import { UserService } from './UsersPage/UsersAcess/user.service';
+import { UserModule } from './UsersPage/UsersAcess/user.module';
+import { UserRepository } from './UsersPage/MongoDB/Repository/RepositoryMongo';
+import { JwtStrategy } from './UsersPage/UsersAcess/jwt.strategy';
+
+
+
 
 @Module({
-  imports: [
-    JwtModule.register({global: true,
-    secret: process.env.SECRET_KEY || '',
-    signOptions: { expiresIn: '86400s'},
+  imports: [ 
+
+    ConfigModule.forRoot({
+      isGlobal: true, // Torna ConfigService disponível globalmente
+    }),
+    
+    JwtModule.register({
+      secret: process.env.SECRET_KEY || 'SERCRET_KEY',
+      signOptions: { expiresIn: '1h' },
   }),
-  UsersModule,
-  MongooseModule.forRoot('mongodb://localhost:27017'),
- ],
+  
+  
+  
+  MongooseModule.forRoot('mongodb://localhost:27017'), UserModule ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, UserService, UserRepository,JwtStrategy],
 })
+
+
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(cors({
@@ -30,4 +45,3 @@ export class AppModule {
   }
 }
 
-//NÃO CONSEGUI RESOLVER O PROBLEMA DO CORS

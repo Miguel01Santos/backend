@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { DataModel } from './dto/model';
+import { UsuarioDto } from './UsersPage/Model.dto/interface.userdto';
+
 
 @Injectable()
 export class AppService {
-  getHello(): DataModel {
+
+  
+  getHello(): UsuarioDto {
     return {
-      title: "Hello",
-      text: "hello you",
+      username: "MiguelSantos",
+      password: "34625096",
     };
   }
 }
